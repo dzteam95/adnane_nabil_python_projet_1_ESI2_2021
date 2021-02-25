@@ -64,7 +64,7 @@ while menus:
                  w = False
         pizzaPers.list_pizza()
         pizzas_list.append(pizzaPers)
-    if(act == 3):
+    if(act == 2):
         print("fin")
         menus = False
 
