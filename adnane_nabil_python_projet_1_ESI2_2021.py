@@ -1,81 +1,74 @@
 import random
 
-player1 = {
-    "name" : "",
-    "health" : 50,
-    "potions" : 3,
+me = {
+        "nom" : "",
+        "vies" : 50,
+        "potions" : 3,
+    }
+
+machine = {
+        "nom" : "machine",
+        "vies" : 50,
+        "potions" : 0,
 }
-
-player2 = {
-    "name" : "Quelqu'un",
-    "health" : 50,
-    "potions" : 0,
-}
-
-# game finished
-def endGame(looser) :
-    if looser==1 :
-        print("Le joueur ", player2["name"], "à gagner")
-    else :
-        print("Le joueur ", player1["name"], "à gagner")
-
-# potions
-def takePotions() :
-    heal = random.randint(15, 50)
-    player1["health"] = player1["health"] + heal
-    player1["potions"] = player1["potions"] - 1
-    print("Vous récupérez ",heal, "de vie")
+me["name"] = input("saissaiez un pseudo")
 
 
-# computer attack
-def attack() :
-    dmg = random.randint(5, 10)
-    player1["health"] = player1["health"] - dmg
 
-    print("Vous subissez ",dmg, "de dégats")
+def vie() :
+        vie = random.randint(15, 50)
+        me["vies"] = me["vies"] + vie
 
-    if player1["health"] <= 0 :
-        endGame(1)
+def potions() :
+        vie = random.randint(5, 10)
+        me["potions"] = me["potions"] - 1
+        print("Vous récupérez ",vie, "de vie")
 
-# player attack
-def playerAttack() :
-    dmg = random.randint(5, 15)
-    player2["health"] = player2["health"] - dmg
+def donner() :
+        dmg = random.randint(5, 10)
+        me["vies"] = me["vies"] - dmg
 
-    print("Vous infligez ",dmg, "de dégats")
+        print("Vous subissez ",dmg, "de dégats")
 
-    if player2["health"] <= 0 :
-        endGame(2)
+        if me["vies"] <= 0 :
+            finjeu(1)
 
-# player attack
+def reçu() :
+        dmg = random.randint(5, 15)
+        machine["vies"] = machine["vies"] - dmg
+
+        print("Vous infligez ",dmg, "de dégats")
+
+        if machine["vies"] <= 0 :
+            finjeu(2)
+
 def recap() :
-    print("Vous avez ",player1["health"], "pts de vie et votre adversaire a", player2["health"], "pts de vie")
+        print("Vous avez ",me["vies"], "pts de vie et votre adversaire a", machine["vies"], "pts de vie")
 
-# player actions
-def playerActions() :
-    choice = 0
-    while choice !=1 and choice !=2 :
-        if player1["potions"]>0 :
-            choice = int(input("Souhaitez-vous attaquer (1) ou utiliser une potion (2) ? "))
-        else :
-            choice = int(input("Vous n'avez plus de potions, vous ne pouvez qu'attaquer (1) : "))
-
-
-    print(" ")
-
-    if choice==1 :
-        playerAttack()
-    if choice==2 :
-        takePotions()
-    print(" ")
-
-    if player1["health"]>0 and player2["health"]>0 :
-        attack()
-        print(" ")
-        recap()
+def actions() :
+        menus = 0
+        while menus !=1 and menus !=2 :
+            if me["potions"]>0 :
+                menus = int(input("Souhaitez-vous attaquer (1) ou utiliser une potion (2) ? "))
+            else :
+                menus = int(input("Vous n'avez plus de potions, vous ne pouvez qu'attaquer (1) : "))
 
 
-player1["name"] = input("Quel est votre nom ? ")
+        if menus==1 :
+            potions()
+        if menus==2 :
+            reçu()
 
-while player1["health"]>0 and player2["health"]>0 :
-    playerActions()
+        if me["vies"]>0 and machine["vies"]>0 :
+            donner()
+            recap()
+
+def finjeu(win) :
+            if win==1 :
+                print(machine["nom"], "win")
+            else :
+                print(me["nom"], "win")
+
+
+while me["vies"]>0 and machine["vies"]>0 :
+    actions()
