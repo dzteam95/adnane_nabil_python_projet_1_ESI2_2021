@@ -13,8 +13,6 @@ machine = {
 }
 me["name"] = input("saissaiez un pseudo")
 
-
-
 def vie() :
         vie = random.randint(15, 50)
         me["vies"] = me["vies"] + vie
